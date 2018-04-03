@@ -5,63 +5,24 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.function.BiConsumer;
 
 public class EventBasedList<E> implements List<E> {
 
 	private List<E> list;
-	private List<BiConsumer<E, Boolean>> subscribersForAdd = new ArrayList<>();
-	private List<BiConsumer<Collection <? extends E>, Boolean>> subscribersForAddAll = new ArrayList<>();
-	private List<BiConsumer<Object, Boolean>> subscribersForRemove = new ArrayList<>();
-	private List<BiConsumer<Collection <?>, Boolean>> subscribersForRemoveAll = new ArrayList<>();
-	private List<BiConsumer<E, Integer>> subscribersForRemoveAtIndex = new ArrayList<>();
+	private ListMediator<E> listMediator;
+
+	public EventBasedList(List<E> list, ListMediator<E> listMediator) {
+		this.list = list;
+		this.listMediator = listMediator;
+	}
 
 	public EventBasedList(List<E> list) {
 		this.list = list;
+		this.listMediator = new ListMediator<>();
 	}
-	
+
 	public EventBasedList() {
 		this.list = new ArrayList<>();
-	}
-	
-	public void registerAddListener(BiConsumer<E, Boolean> consumer) {
-		subscribersForAdd.add(consumer);
-	}
-	
-	private void publishForAdd(E e, boolean result) {
-		subscribersForAdd.stream().forEach(l -> l.accept(e, result));
-	}
-	
-	public void registerAddAllListener(BiConsumer<Collection <? extends E>, Boolean> consumer) {
-		subscribersForAddAll.add(consumer);
-	}
-	
-	private void publishForAddAll(Collection<? extends E> c, boolean result) {
-		subscribersForAddAll.stream().forEach(l -> l.accept(c, result));
-	}
-	
-	public void registerRemoveListener(BiConsumer<Object, Boolean> consumer) {
-		subscribersForRemove.add(consumer);
-	}
-	
-	private void publishForRemove(Object o, boolean result) {
-		subscribersForRemove.stream().forEach(l -> l.accept(o, result));
-	}
-	
-	public void registerRemoveAllListener(BiConsumer<Collection <?>, Boolean> consumer) {
-		subscribersForRemoveAll.add(consumer);
-	}
-	
-	private void publishForRemoveAll(Collection<?> c, boolean result) {
-		subscribersForRemoveAll.stream().forEach(l -> l.accept(c, result));
-	}
-	
-	public void registerRemoveAtIndexListener(BiConsumer<E, Integer> consumer) {
-		subscribersForRemoveAtIndex.add(consumer);
-	}
-	
-	private void publishForRemoveAtIndex(int index, E element) {
-		subscribersForRemoveAtIndex.stream().forEach(l -> l.accept(element, index));
 	}
 
 	public int size() {
@@ -90,13 +51,13 @@ public class EventBasedList<E> implements List<E> {
 
 	public boolean add(E e) {
 		boolean result = list.add(e);
-		publishForAdd(e, result);
+		getListMediator().publishForAdd(e, result);
 		return result;
 	}
 
 	public boolean remove(Object o) {
 		boolean result = list.remove(o);
-		publishForRemove(o, result);
+		getListMediator().publishForRemove(o, result);
 		return result;
 	}
 
@@ -106,27 +67,26 @@ public class EventBasedList<E> implements List<E> {
 
 	public boolean addAll(Collection<? extends E> c) {
 		boolean result = list.addAll(c);
-		publishForAddAll(c, result);
+		getListMediator().publishForAddAll(c, result);
 		return result;
 	}
 
-
 	public boolean addAll(int index, Collection<? extends E> c) {
-		boolean result = list.addAll(index,c);
-		publishForAddAll(c, result);
+		boolean result = list.addAll(index, c);
+		getListMediator().publishForAddAll(c, result);
 		return result;
 	}
 
 	public boolean removeAll(Collection<?> c) {
 		boolean result = list.removeAll(c);
-		publishForRemoveAll(c, result);
+		getListMediator().publishForRemoveAll(c, result);
 		return result;
 	}
 
-
 	public boolean retainAll(Collection<?> c) {
-		//TODO
-		return list.retainAll(c);
+		boolean result = list.retainAll(c);
+		getListMediator().publishForRemoveAll(c, result);
+		return result;
 	}
 
 	public void clear() {
@@ -142,16 +102,15 @@ public class EventBasedList<E> implements List<E> {
 	}
 
 	public void add(int index, E element) {
-		list.add(index,element);
-		publishForAdd(element, true);
+		list.add(index, element);
+		getListMediator().publishForAdd(element, true);
 	}
 
 	public E remove(int index) {
 		E element = list.remove(index);
-		publishForRemoveAtIndex(index, element);
+		getListMediator().publishForRemoveAtIndex(index, element);
 		return element;
 	}
-
 
 	public int indexOf(Object o) {
 		return list.indexOf(o);
@@ -171,6 +130,14 @@ public class EventBasedList<E> implements List<E> {
 
 	public List<E> subList(int fromIndex, int toIndex) {
 		return list.subList(fromIndex, toIndex);
+	}
+
+	public ListMediator<E> getListMediator() {
+		return listMediator;
+	}
+
+	public void setListMediator(ListMediator<E> listMediator) {
+		this.listMediator = listMediator;
 	}
 
 }
