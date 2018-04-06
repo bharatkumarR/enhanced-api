@@ -79,6 +79,15 @@ public class TimeOutMap<K,V> implements Map<K, V>{
 
 	@Override
 	public void putAll(Map<? extends K, ? extends V> m) {
+		LocalTime time = LocalTime.now().plusMinutes(timeout);
+		int hourMin  = time.getHour() *10 + time.getMinute();
+		Set<? extends K> keySet = m.keySet();
+		List<K> list = timeOutMap.get(hourMin);
+		if (list == null ) {
+			list =  new ArrayList<>();
+			timeOutMap.put(hourMin, list);
+		}
+		list.addAll(keySet);
 		map.putAll(m);
 	}
 
