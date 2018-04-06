@@ -121,15 +121,15 @@ public class EventBasedList<E> implements List<E> {
 	}
 
 	public ListIterator<E> listIterator() {
-		return list.listIterator();
+		return new EventBasedListIterator<E>(list.listIterator(),this.listMediator);
 	}
 
 	public ListIterator<E> listIterator(int index) {
-		return list.listIterator(index);
+		return new EventBasedListIterator<E>(list.listIterator(index), this.listMediator);
 	}
 
 	public List<E> subList(int fromIndex, int toIndex) {
-		return list.subList(fromIndex, toIndex);
+		return new EventBasedList<>(list.subList(fromIndex, toIndex),listMediator);
 	}
 
 	public ListMediator<E> getListMediator() {
