@@ -9,6 +9,7 @@ public class ListMediator<E> {
 	
 	private List<BiConsumer<E, Boolean>> subscribersForAdd = new ArrayList<>();
 	private List<BiConsumer<Collection <? extends E>, Boolean>> subscribersForAddAll = new ArrayList<>();
+	
 	private List<BiConsumer<Object, Boolean>> subscribersForRemove = new ArrayList<>();
 	private List<BiConsumer<Collection <?>, Boolean>> subscribersForRemoveAll = new ArrayList<>();
 	private List<BiConsumer<E, Integer>> subscribersForRemoveAtIndex = new ArrayList<>();
