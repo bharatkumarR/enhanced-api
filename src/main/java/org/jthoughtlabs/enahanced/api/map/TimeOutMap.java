@@ -8,12 +8,39 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * The Class TimeOutMap. This class can be specified by default timeout for the
+ * values that are stored.
+ *
+ * Uses {@link ConcurrentHashMap} internally to lookup the timeouts. This class
+ * internally runs a thread to keep polling the timeouts, and this thread will
+ * be garbage collected along with the main thread
+ *
+ *
+ * @param <K>
+ *          the key type
+ * @param <V>
+ *          the value type
+ */
 public class TimeOutMap<K, V> implements Map<K, V> {
 
+	/** The map. */
 	private Map<K, V> map;
+
+	/** The timeout. */
 	private long timeout;
+
+	/** The time out map. */
 	private Map<Integer, List<K>> timeOutMap = new ConcurrentHashMap<>();
 
+	/**
+	 * Instantiates a new time out map.
+	 *
+	 * @param map
+	 *          the map
+	 * @param timeout
+	 *          the timeout
+	 */
 	public TimeOutMap(Map<K, V> map, long timeout) {
 		this.map = map;
 		this.timeout = timeout;
@@ -24,6 +51,13 @@ public class TimeOutMap<K, V> implements Map<K, V> {
 
 	}
 
+	/**
+	 * Gets the time out verifier.
+	 *
+	 * @param map
+	 *          the map
+	 * @return the time out verifier
+	 */
 	private Runnable getTimeOutVerifier(Map<K, V> map) {
 		return () -> {
 			while (true) {
@@ -111,6 +145,15 @@ public class TimeOutMap<K, V> implements Map<K, V> {
 		return map.entrySet();
 	}
 
+	/**
+	 * Put.
+	 *
+	 * @param key
+	 *          the key
+	 * @param value
+	 *          the value
+	 * @return the list
+	 */
 	public List<K> put(Integer key, K value) {
 		List<K> list = timeOutMap.get(key);
 		if (list == null) {
