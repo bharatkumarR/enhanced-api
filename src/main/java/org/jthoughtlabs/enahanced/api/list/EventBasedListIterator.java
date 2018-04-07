@@ -69,7 +69,7 @@ public class EventBasedListIterator<E> implements ListIterator<E> {
 	 * {@inheritDoc}
 	 * <P>
 	 * Once element is removed this method will notify the mediator to publish the
-	 * changes. Element to be removed & boolean value of true will be send to
+	 * changes. Element to be removed and boolean value of true will be send to
 	 * mediator. subscriber will get notified as mentioned by
 	 * {@link ListMediator#publishForRemove(Object, boolean)}
 	 * </p>
@@ -86,7 +86,7 @@ public class EventBasedListIterator<E> implements ListIterator<E> {
 	 * <P>
 	 * Once last element was replaced then  this method will
 	 * notify the mediator to publish the changes. Replaced element will be notified
-	 * using {@link ListMediator#publishForRemove(Object, boolean)} & Element was
+	 * using {@link ListMediator#publishForRemove(Object, boolean)} and Element was
 	 * replaced by will be notified as mentioned by
 	 * {@link ListMediator#publishForAdd(Object, boolean)}
 	 * 
@@ -104,7 +104,7 @@ public class EventBasedListIterator<E> implements ListIterator<E> {
 	 * {@inheritDoc}
 	 * <P>
 	 * Once element is added this method will notify the mediator to publish the
-	 * changes. Both element to be added & boolean with default value with true will
+	 * changes. Both element to be added and boolean with default value with true will
 	 * be send to mediator. subscriber will get notified as mentioned by
 	 * {@link ListMediator#publishForAdd(Object, boolean)}
 	 * </p>

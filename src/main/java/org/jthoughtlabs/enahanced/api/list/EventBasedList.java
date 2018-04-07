@@ -76,7 +76,7 @@ public class EventBasedList<E> implements List<E> {
 	 * {@inheritDoc}
 	 * <P>
 	 * Once element is added this method will notify the mediator to publish the
-	 * changes. Both element to be added & boolean returned by
+	 * changes. Both element to be added and boolean returned by
 	 * {@link Collection#add} method will be send to mediator. subscriber will get
 	 * notified as mentioned by {@link ListMediator}
 	 * </p>
@@ -92,7 +92,7 @@ public class EventBasedList<E> implements List<E> {
 	 * {@inheritDoc}
 	 * <P>
 	 * Once element is removed this method will notify the mediator to publish the
-	 * changes. Both element to be removed & boolean returned by
+	 * changes. Both element to be removed and boolean returned by
 	 * {@link Collection#remove} method will be send to mediator. subscriber will
 	 * get notified as mentioned by {@link ListMediator}
 	 * </p>
@@ -112,7 +112,7 @@ public class EventBasedList<E> implements List<E> {
 	 * {@inheritDoc}
 	 * <P>
 	 * Once all elements are added to the list then this method will notify the
-	 * mediator to publish the changes. Both collection of elements to be added &
+	 * mediator to publish the changes. Both collection of elements to be added and
 	 * boolean returned by {@link Collection#addAll(Collection)} method will be send
 	 * to mediator. subscriber will get notified as mentioned by
 	 * {@link ListMediator}
@@ -129,7 +129,7 @@ public class EventBasedList<E> implements List<E> {
 	 * {@inheritDoc}
 	 * <P>
 	 * Once all elements are added to the list then this method will notify the
-	 * mediator to publish the changes. Both collection of elements to be added &
+	 * mediator to publish the changes. Both collection of elements to be added and
 	 * boolean returned by {@link Collection#addAll(Collection)} method will be send
 	 * to mediator. subscriber will get notified as mentioned by
 	 * {@link ListMediator}
@@ -146,7 +146,7 @@ public class EventBasedList<E> implements List<E> {
 	 * {@inheritDoc}
 	 * <P>
 	 * Once all elements are removed from the list then this method will notify the
-	 * mediator to publish the changes. Both collection of elements to be removed &
+	 * mediator to publish the changes. Both collection of elements to be removed and
 	 * boolean returned by {@link Collection#removeAll(Collection)} method will be
 	 * send to mediator. subscriber will get notified as mentioned by
 	 * {@link ListMediator}
@@ -163,7 +163,7 @@ public class EventBasedList<E> implements List<E> {
 	 * {@inheritDoc}
 	 * <P>
 	 * Once all elements are retained to the list then this method will notify the
-	 * mediator to publish the changes. Both collection of elements retained &
+	 * mediator to publish the changes. Both collection of elements retained and
 	 * boolean returned by {@link Collection#retainAll(Collection)} method will be
 	 * send to mediator. subscriber will get notified as mentioned by
 	 * {@link ListMediator}
@@ -200,7 +200,7 @@ public class EventBasedList<E> implements List<E> {
 	 * {@inheritDoc}
 	 * <P>
 	 * Once element is removed this method will notify the mediator to publish the
-	 * changes. Both element returned by {@link List#remove(int)} method & the index
+	 * changes. Both element returned by {@link List#remove(int)} method and the index
 	 * specified will be send to mediator. subscriber will get notified as mentioned
 	 * by {@link ListMediator}
 	 * </p>
