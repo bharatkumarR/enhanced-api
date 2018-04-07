@@ -1,3 +1,2 @@
 # enhanced-api
-This project helps developers to consume additional features on top of java datastructures. Like for list you can have register for events nay add / remove / modify will notify.
-Simply this project contains event based list java and time based expiryMap
+This project helps developers to consume additional features on top of java datastructures. Like for list you can register for events any modification to list will notify listner.Event based list and time based expiryMap datastructures available currently.
