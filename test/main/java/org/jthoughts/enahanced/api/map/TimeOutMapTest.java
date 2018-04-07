@@ -1,8 +1,9 @@
-package org.coding.thoughts.enahanced.api;
+package org.jthoughts.enahanced.api.map;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jthoughtlabs.enahanced.api.map.TimeOutMap;
 import org.junit.Assert;
 import org.junit.Test;
 

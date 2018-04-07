@@ -1,4 +1,4 @@
-package org.coding.thoughts.enahanced.api;
+package org.jthoughtlabs.enahanced.api.list;
 
 import java.util.ArrayList;
 import java.util.Collection;

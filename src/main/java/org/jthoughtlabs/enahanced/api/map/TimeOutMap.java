@@ -1,4 +1,4 @@
-package org.coding.thoughts.enahanced.api;
+package org.jthoughtlabs.enahanced.api.map;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
