@@ -8,30 +8,30 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class TimeOutMap<K,V> implements Map<K, V>{
-	
+public class TimeOutMap<K, V> implements Map<K, V> {
+
 	private Map<K, V> map;
 	private long timeout;
 	private Map<Integer, List<K>> timeOutMap = new ConcurrentHashMap<>();
 
-	public TimeOutMap(Map<K, V> map, long timeout){
+	public TimeOutMap(Map<K, V> map, long timeout) {
 		this.map = map;
 		this.timeout = timeout;
-		
+
 		Runnable run = getTimeOutVerifier(map);
 		Thread t = new Thread(run);
 		t.start();
-		
+
 	}
 
 	private Runnable getTimeOutVerifier(Map<K, V> map) {
 		return () -> {
-			while(true) {
+			while (true) {
 				LocalTime time = LocalTime.now();
-				int hourMin  = time.getHour() *10 + time.getMinute();
-				
+				int hourMin = time.getHour() * 10 + time.getMinute();
+
 				List<K> list = this.timeOutMap.get(hourMin);
-				if(list != null && !list.isEmpty()) {
+				if (list != null && !list.isEmpty()) {
 					list.stream().forEach(l -> map.remove(l));
 				}
 			}
@@ -65,10 +65,10 @@ public class TimeOutMap<K,V> implements Map<K, V>{
 
 	@Override
 	public V put(K key, V value) {
-		
+
 		LocalTime time = LocalTime.now().plusMinutes(timeout);
-		int hourMin  = time.getHour() *10 + time.getMinute();
-		put(hourMin,key);
+		int hourMin = time.getHour() * 10 + time.getMinute();
+		put(hourMin, key);
 		return map.put(key, value);
 	}
 
@@ -80,11 +80,11 @@ public class TimeOutMap<K,V> implements Map<K, V>{
 	@Override
 	public void putAll(Map<? extends K, ? extends V> m) {
 		LocalTime time = LocalTime.now().plusMinutes(timeout);
-		int hourMin  = time.getHour() *10 + time.getMinute();
+		int hourMin = time.getHour() * 10 + time.getMinute();
 		Set<? extends K> keySet = m.keySet();
 		List<K> list = timeOutMap.get(hourMin);
-		if (list == null ) {
-			list =  new ArrayList<>();
+		if (list == null) {
+			list = new ArrayList<>();
 			timeOutMap.put(hourMin, list);
 		}
 		list.addAll(keySet);
@@ -110,11 +110,11 @@ public class TimeOutMap<K,V> implements Map<K, V>{
 	public Set<Entry<K, V>> entrySet() {
 		return map.entrySet();
 	}
-	
+
 	public List<K> put(Integer key, K value) {
 		List<K> list = timeOutMap.get(key);
-		if(list == null) {
-			list =  new ArrayList<>();
+		if (list == null) {
+			list = new ArrayList<>();
 			timeOutMap.put(key, list);
 		}
 		list.add(value);

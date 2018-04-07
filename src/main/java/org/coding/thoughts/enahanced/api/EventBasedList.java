@@ -9,6 +9,7 @@ import java.util.ListIterator;
 public class EventBasedList<E> implements List<E> {
 
 	private List<E> list;
+
 	private ListMediator<E> listMediator;
 
 	public EventBasedList(List<E> list, ListMediator<E> listMediator) {
@@ -121,7 +122,7 @@ public class EventBasedList<E> implements List<E> {
 	}
 
 	public ListIterator<E> listIterator() {
-		return new EventBasedListIterator<E>(list.listIterator(),this.listMediator);
+		return new EventBasedListIterator<E>(list.listIterator(), this.listMediator);
 	}
 
 	public ListIterator<E> listIterator(int index) {
@@ -129,7 +130,7 @@ public class EventBasedList<E> implements List<E> {
 	}
 
 	public List<E> subList(int fromIndex, int toIndex) {
-		return new EventBasedList<>(list.subList(fromIndex, toIndex),listMediator);
+		return new EventBasedList<>(list.subList(fromIndex, toIndex), listMediator);
 	}
 
 	public ListMediator<E> getListMediator() {
